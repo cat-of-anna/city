@@ -1,10 +1,12 @@
 <template>
-$END$
+  <div>
+    <router-view></router-view>
+  </div>
 </template>
 
 <script>
 export default {
-name: "ActivityView"
+  name: "ActivityView"
 }
 </script>
 

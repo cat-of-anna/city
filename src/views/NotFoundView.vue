@@ -1,10 +1,10 @@
 <template>
-$END$
+  <el-empty description="404，Not Found！">页面没找到</el-empty>
 </template>
 
 <script>
 export default {
-name: "NotFoundView"
+  name: "NotFoundView"
 }
 </script>
 

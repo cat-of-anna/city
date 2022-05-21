@@ -9,9 +9,11 @@
 
           <div v-show="tabSelected === 0">
             <el-form :model="userForm" ref="userForm" :rules="userRules">
+<!--              :error="userFormError.username"-->
               <el-form-item prop="username">
                 <el-input v-model="userForm.username" placeholder="用户名或手机号"></el-input>
               </el-form-item>
+<!--              :error="userFormError.password"-->
               <el-form-item prop="password">
                 <el-input type="password" v-model="userForm.password" show-password placeholder="密码"></el-input>
               </el-form-item>
@@ -61,6 +63,10 @@ export default {
         username: '',
         password: '',
       },
+      userFormError:{
+        username: '',
+        password: '',
+      },
       smsForm:{   // 免密登录，用户登录表单
         phone: '',
         code: '',
@@ -90,14 +96,34 @@ export default {
   },
   methods: {
     submitForm(formName) {
+      // 清空原来的错误
+      this.clearCustomerError();
+      // 验证表单
       this.$refs[formName].validate((valid)=> {
         if(!valid){
           console.log("验证未通过");
           return false;  // 验证未通过
-        }else {
-          console.log("验证通过");
-          return true;
         }
+        // 验证通过，发送ajax请求
+        this.axios.post("/base/auth/", this.userForm).then(res=> {
+            if(res.data.code === 0){
+              // 登录成功
+              this.$store.commit("login", res.data.data);
+              this.$router.push({path: '/'});
+              return;
+            }
+            // 1000，验证字段错误
+            if(res.data.code === 1000){
+              this.validateFormFailed(res.data.detail);
+              return;
+            }
+            // 1001,整体错误
+            if(res.data.code === 1001){
+              this.$message.error(res.data.detail);
+            }else {
+              this.$message.error('请求失败');
+            }
+          })
       });
     },
 
@@ -122,6 +148,18 @@ export default {
           return true
         }
       });
+    },
+
+    validateFormFailed(errorData) {
+      for (let fileName in errorData) {
+        this.userFormError[fileName] = errorData[fileName][0];
+      }
+    },
+
+    clearCustomerError() {
+      for (let key in this.userFormError) {
+        this.userFormError[key] = "";
+      }
     },
 
   }
