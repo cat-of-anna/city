@@ -11,7 +11,7 @@ import {Message} from "element-ui"
 Vue.use(VueAxios, axios)
 
 // 设置默认值
-axios.defaults.baseURL = 'http://8.130.102.77/api/';
+axios.defaults.baseURL = 'http://8.130.102.77:8000/api/';
 // axios.defaults.headers.common['Authorization'] = getToken();
 // axios.defaults.headers.post['Content-Type'] = 'application/json';
 // axios.defaults.headers.put['Content-Type'] = 'application/json';
