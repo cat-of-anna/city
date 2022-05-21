@@ -1,10 +1,10 @@
 import Vue from 'vue'
 import App from './App.vue'
-import './plugins/cookie.js'
+import './plugins/cookie.js'    // 挂载cookie
 import router from './router'
 import store from './store'
 import './plugins/element.js'
-import './plugins/axios'
+import './plugins/axios'    // 挂载axios
 import HighchartsVue from 'highcharts-vue'
 
 Vue.use(HighchartsVue)
