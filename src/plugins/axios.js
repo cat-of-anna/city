@@ -7,7 +7,6 @@ import store from '../store/index'
 import {Message} from "element-ui"
 
 
-
 Vue.use(VueAxios, axios)
 
 // 设置默认值
